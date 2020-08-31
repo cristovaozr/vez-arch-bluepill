@@ -51,11 +51,13 @@ ARCH_C_SOURCES += \
 	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c \
 	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c \
 	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c \
-	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c
+	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c \
+	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c
 
 ARCH_C_SOURCES += \
 	$(R_PATH)/src/stm32f1xx_it.c \
 	$(R_PATH)/src/system_stm32f1xx.c \
 	$(R_PATH)/src/hw_init.c \
 	$(R_PATH)/src/device/gpio_impl.c \
-	$(R_PATH)/src/device/usart_impl.c
+	$(R_PATH)/src/device/usart_impl.c \
+	$(R_PATH)/src/device/pwm_impl.c

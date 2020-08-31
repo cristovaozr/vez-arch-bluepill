@@ -80,11 +80,3 @@ void I2C1_ER_IRQHandler(void)
 {
 
 }
-
-/**
-  * @brief This function handles SPI1 global interrupt.
-  */
-void SPI1_IRQHandler(void)
-{
-
-}

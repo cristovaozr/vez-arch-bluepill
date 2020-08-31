@@ -12,6 +12,7 @@
 
 #include "include/errors.h"
 #include "include/utils.h"
+#include "include/device/pool_op.h"
 
 #include "stm32f103xb.h"
 #include "stm32f1xx_ll_gpio.h"
@@ -50,7 +51,7 @@ struct usart_priv_rtos {
     SemaphoreHandle_t mutex;
 };
 
-static struct usart_priv usart1_priv = {
+static const struct usart_priv usart1_priv = {
     .tx_pin_config = {
         .Pin = LL_GPIO_PIN_9,
         .Mode = LL_GPIO_MODE_ALTERNATE,
@@ -84,7 +85,7 @@ static struct usart_priv usart1_priv = {
     .index = 0
 };
 
-static struct usart_priv usart2_priv = {
+static const struct usart_priv usart2_priv = {
     .tx_pin_config = {
         .Pin = LL_GPIO_PIN_2,
         .Mode = LL_GPIO_MODE_ALTERNATE,
@@ -118,7 +119,7 @@ static struct usart_priv usart2_priv = {
     .index = 1
 };
 
-static struct usart_priv usart3_priv = {
+static const struct usart_priv usart3_priv = {
     .tx_pin_config = {
         .Pin = LL_GPIO_PIN_10,
         .Mode = LL_GPIO_MODE_ALTERNATE,
@@ -180,17 +181,17 @@ static const struct usart_operations usart_2_3_ops = {
  */
 static struct usart_priv_rtos priv_rtos[AVAILABLE_USARTS];
 
-EXPORTED struct usart_device usart1 = {
+EXPORTED const struct usart_device usart1 = {
     .ops = &usart1_ops,
     .priv = &usart1_priv,
 };
 
-EXPORTED struct usart_device usart2 = {
+EXPORTED const struct usart_device usart2 = {
     .ops = &usart_2_3_ops,
     .priv = &usart2_priv,
 };
 
-EXPORTED struct usart_device usart3 = {
+EXPORTED const struct usart_device usart3 = {
     .ops = &usart_2_3_ops,
     .priv = &usart3_priv,
 };
