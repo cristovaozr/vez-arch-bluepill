@@ -89,23 +89,22 @@ static int32_t stm32f103xb_spi1_init(const struct spi_device * const spi)
     /* Peripheral clock enable */
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SPI1);
 
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
+    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
     /**SPI1 GPIO Configuration  
-     PB3   ------> SPI1_SCK
-    PB4   ------> SPI1_MISO
-    PB5   ------> SPI1_MOSI 
+    PA4   ------> SPI1_NSS
+    PA5   ------> SPI1_SCK
+    PA6   ------> SPI1_MISO
+    PA7   ------> SPI1_MOSI 
     */
-    GPIO_InitStruct.Pin = LL_GPIO_PIN_3|LL_GPIO_PIN_5;
+    GPIO_InitStruct.Pin = LL_GPIO_PIN_4|LL_GPIO_PIN_5|LL_GPIO_PIN_7;
     GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
+    GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
     GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    LL_GPIO_AF_EnableRemap_SPI1();
+    LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     SPI_InitStruct.TransferDirection = LL_SPI_FULL_DUPLEX;
     SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
@@ -140,7 +139,7 @@ static int32_t stm32f103xb_spi2_init(const struct spi_device * const spi)
 
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
     /**SPI2 GPIO Configuration  
-     PB12   ------> SPI2_NSS
+    PB12   ------> SPI2_NSS
     PB13   ------> SPI2_SCK
     PB14   ------> SPI2_MISO
     PB15   ------> SPI2_MOSI 
