@@ -45,7 +45,9 @@ void hw_init_late_config(void)
     // device_init(&usart1);
     device_init(&usart2);
     // device_init(&usart3);
-    device_init(&pwm_tim1);
+    // device_init(&pwm_tim1);
+    // device_init(&spi1);
+    device_init(&spi2);
 
     /* Initialize all configured peripherals */
     // MX_GPIO_Init();

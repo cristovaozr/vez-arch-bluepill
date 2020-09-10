@@ -60,4 +60,5 @@ ARCH_C_SOURCES += \
 	$(R_PATH)/src/hw_init.c \
 	$(R_PATH)/src/device/gpio_impl.c \
 	$(R_PATH)/src/device/usart_impl.c \
-	$(R_PATH)/src/device/pwm_impl.c
+	$(R_PATH)/src/device/pwm_impl.c \
+	$(R_PATH)/src/device/spi_impl.c

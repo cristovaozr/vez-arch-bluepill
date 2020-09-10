@@ -23,6 +23,7 @@ extern const struct usart_device usart3;
 
 // Available at spi_impl.c
 extern const struct spi_device spi1;
+extern const struct spi_device spi2;
 
 // Available at pwm_impl.c
 extern const struct pwm_device pwm_tim1;
