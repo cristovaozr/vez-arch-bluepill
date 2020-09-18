@@ -43,6 +43,7 @@ void hw_init_late_config(void)
 {
     device_init(&led_gpio);
     device_init(&nrf24l01p_ce);
+    device_init(&nrf24l01p_ce2);
     // device_init(&usart1);
     device_init(&usart2);
     // device_init(&usart3);

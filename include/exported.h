@@ -16,6 +16,7 @@
 // Available at gpio_impl.c
 extern const struct gpio_device led_gpio;
 extern const struct gpio_device nrf24l01p_ce;
+extern const struct gpio_device nrf24l01p_ce2;
 
 // Available at usart_impl.c
 extern const struct usart_device usart1;
