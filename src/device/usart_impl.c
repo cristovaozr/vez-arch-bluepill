@@ -316,7 +316,7 @@ static int32_t stm32f103xb_usart_poll(const struct usart_device * const usart, e
             goto exit;
         }
         *((uint32_t *)answer) = uxQueueMessagesWaiting(priv_rtos[priv->index].rx_queue);
-        ret = 0;
+        ret = E_SUCCESS;
         break;
     }
     

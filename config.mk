@@ -55,6 +55,9 @@ ARCH_C_SOURCES += \
 	$(R_PATH)/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c
 
 ARCH_C_SOURCES += \
+	$(R_PATH)/freertos/portable/GCC/ARM_CM3/port.c
+
+ARCH_C_SOURCES += \
 	$(R_PATH)/src/stm32f1xx_it.c \
 	$(R_PATH)/src/system_stm32f1xx.c \
 	$(R_PATH)/src/hw_init.c \
