@@ -14,8 +14,7 @@
 #include "stm32f1xx_ll_pwr.h"
 #include "stm32f1xx_ll_utils.h"
 
-#include "include/exported.h"
-#include "include/device/device_init.h"
+#include "include/device/device.h"
 
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0    ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, 4 bits for subpriority */
@@ -38,6 +37,18 @@ void hw_init(void)
 {
     SystemClock_Config();
 }
+
+extern const struct gpio_device led_gpio;
+extern const struct gpio_device nrf24l01p_ce;
+extern const struct gpio_device nrf24l01p_ce2;
+extern const struct usart_device usart1;
+extern const struct usart_device usart2;
+extern const struct usart_device usart3;
+extern const struct spi_device spi1;
+extern const struct spi_device spi2;
+
+// Available at pwm_impl.c
+extern const struct pwm_device pwm_tim1;
 
 void hw_init_late_config(void)
 {
