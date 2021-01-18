@@ -16,17 +16,21 @@ extern const struct usart_device usart2;
 extern const struct usart_device usart3;
 extern const struct spi_device spi1;
 extern const struct spi_device spi2;
+extern const struct i2c_device i2c1;
 
 struct device_tree {
     const char *name;
     const void *device;
 };
 
-static struct device_tree tree[5] = {
+static struct device_tree tree[7] = {
     {DEFAULT_USART, &usart2},
     {DEFAULT_LED,   &led_gpio},
+    {"usart1",      &usart1},
+    {"usart3",      &usart3},
     {"spi1",        &spi1},
-    {"spi2",        &spi2}
+    {"spi2",        &spi2},
+    {"i2c1",        &i2c1}
 };
 
 const void *device_get_by_name(const char *dev_name)

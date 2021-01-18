@@ -16,6 +16,8 @@
 
 #include "include/device/device.h"
 
+#include "include/errors.h"
+
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0    ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, 4 bits for subpriority */
 #define NVIC_PRIORITYGROUP_1    ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority, 3 bits for subpriority */
@@ -26,16 +28,18 @@
 
 static void SystemClock_Config(void);
 
-void hw_init_early_config(void)
+int32_t hw_init_early_config(void)
 {
     NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
     NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
     NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
+    return E_SUCCESS;
 }
 
-void hw_init(void)
+int32_t hw_init(void)
 {
     SystemClock_Config();
+    return E_SUCCESS;
 }
 
 extern const struct gpio_device led_gpio;
@@ -46,26 +50,32 @@ extern const struct usart_device usart2;
 extern const struct usart_device usart3;
 extern const struct spi_device spi1;
 extern const struct spi_device spi2;
+extern const struct i2c_device i2c1;
 
 // Available at pwm_impl.c
 extern const struct pwm_device pwm_tim1;
 
-void hw_init_late_config(void)
+int32_t hw_init_late_config(void)
 {
-    device_init(&led_gpio);
-    device_init(&nrf24l01p_ce);
-    device_init(&nrf24l01p_ce2);
+    int32_t ret;
+    if ((ret = device_init(&led_gpio)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&nrf24l01p_ce)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&nrf24l01p_ce2)) != E_SUCCESS) goto exit;
     // device_init(&usart1);
-    device_init(&usart2);
+    if ((ret = device_init(&usart2)) != E_SUCCESS) goto exit;
     // device_init(&usart3);
     // device_init(&pwm_tim1);
-    device_init(&spi1);
-    device_init(&spi2);
+    if ((ret = device_init(&spi1)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&spi2)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&i2c1)) != E_SUCCESS) goto exit;
 
     /* Initialize all configured peripherals */
     // MX_ADC1_Init();
     // MX_I2C1_Init();
     // MX_RTC_Init();
+
+    exit:
+    return ret;
 }
 
 /**
