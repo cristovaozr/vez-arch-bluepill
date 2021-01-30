@@ -8,6 +8,8 @@
 
 #include "include/device/gpio.h"
 
+#include "include/errors.h"
+
 #include <stdint.h>
 
 #include "include/utils.h"
@@ -88,21 +90,13 @@ EXPORTED const struct gpio_device nrf24l01p_ce2 = {
     .priv = &nrf24l01p_ce2_priv
 };
 
-// Implementation
-
 static int32_t stm32f103xb_gpio_init(const struct gpio_device * const gpio)
 {
     const struct gpio_priv *priv = (const struct gpio_priv *)gpio->priv;
     LL_APB2_GRP1_EnableClock(priv->apb2_grp1_periph);
     LL_GPIO_Init(priv->gpio, (LL_GPIO_InitTypeDef *)&priv->config);
-    return 0;
 
-    // TODO: Old stuff here to remember what else had here. Should be erased in the future
-    /* GPIO Ports Clock Enable */
-    // LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOD);
-    // LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOA);
-    // LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
-    // LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin);
+    return E_SUCCESS;
 }
 
 static void stm32f103xb_gpio_write(const struct gpio_device * const gpio, int32_t value)
