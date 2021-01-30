@@ -23,13 +23,10 @@ struct device_tree {
     const void *device;
 };
 
-static struct device_tree tree[7] = {
+static struct device_tree tree[4] = {
     {DEFAULT_USART, &usart2},
     {DEFAULT_LED,   &led_gpio},
-    {"usart1",      &usart1},
-    {"usart3",      &usart3},
     {"spi1",        &spi1},
-    {"spi2",        &spi2},
     {"i2c1",        &i2c1}
 };
 
