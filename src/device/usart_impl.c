@@ -262,7 +262,7 @@ static int32_t stm32f103xb_usart_write(const struct usart_device * const usart, 
     uint32_t i;
 
     if (priv_rtos[priv->index].tx_queue == NULL || priv_rtos[priv->index].mutex == NULL) {
-        return E_NOTINIT;
+        return E_NOT_INITIALIZED;
     }
 
     xSemaphoreTake(priv_rtos[priv->index].mutex, portMAX_DELAY);
@@ -286,7 +286,7 @@ static int32_t stm32f103xb_usart_read(const struct usart_device * const usart, v
     int32_t ret;
 
     if (priv_rtos[priv->index].rx_queue == NULL || priv_rtos[priv->index].mutex == NULL) {
-        ret = E_NOTINIT;
+        ret = E_NOT_INITIALIZED;
         goto exit;
     }
 
@@ -312,7 +312,7 @@ static int32_t stm32f103xb_usart_poll(const struct usart_device * const usart, e
     switch (op) {
     case POLL_RX_QUEUE_SIZE: {
         if (priv_rtos[priv->index].rx_queue == NULL) {
-            ret = E_NOTINIT;
+            ret = E_NOT_INITIALIZED;
             goto exit;
         }
         *((uint32_t *)answer) = uxQueueMessagesWaiting(priv_rtos[priv->index].rx_queue);
@@ -321,7 +321,7 @@ static int32_t stm32f103xb_usart_poll(const struct usart_device * const usart, e
     }
     
     default:
-        ret = E_POLLOPINVALID;
+        ret = E_POLLOP_INVALID;
         goto exit;
     }
 
