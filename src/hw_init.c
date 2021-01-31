@@ -45,6 +45,7 @@ int32_t hw_init(void)
 extern const struct gpio_device led_gpio;
 extern const struct gpio_device nrf24l01p_ce;
 extern const struct gpio_device nrf24l01p_ce2;
+extern const struct gpio_device spi1_cs;
 extern const struct usart_device usart1;
 extern const struct usart_device usart2;
 extern const struct usart_device usart3;
@@ -59,11 +60,12 @@ int32_t hw_init_late_config(void)
 {
     int32_t ret;
     if ((ret = device_init(&led_gpio)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&spi1_cs)) != E_SUCCESS) goto exit;
+    if ((ret = device_init(&nrf24l01p_ce)) != E_SUCCESS) goto exit;
     if ((ret = device_init(&usart2)) != E_SUCCESS) goto exit;
     if ((ret = device_init(&spi1)) != E_SUCCESS) goto exit;
     if ((ret = device_init(&i2c1)) != E_SUCCESS) goto exit;
     // if ((ret = device_init(&spi2)) != E_SUCCESS) goto exit;
-    // if ((ret = device_init(&nrf24l01p_ce)) != E_SUCCESS) goto exit;
     // if ((ret = device_init(&nrf24l01p_ce2)) != E_SUCCESS) goto exit;
     // device_init(&usart1);
     // device_init(&usart3);

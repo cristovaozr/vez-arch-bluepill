@@ -24,7 +24,7 @@ struct gpio_priv {
     LL_GPIO_InitTypeDef config;
     uint32_t            apb2_grp1_periph;
     GPIO_TypeDef        *gpio;
-    uint32_t            pin;
+    uint32_t            default_value;
 };
 
 static const struct gpio_priv led_priv = {
@@ -36,7 +36,6 @@ static const struct gpio_priv led_priv = {
     },
     .apb2_grp1_periph = LL_APB2_GRP1_PERIPH_GPIOC,
     .gpio = LED_GPIO_Port,
-    .pin = LED_Pin,
 };
 
 static const struct gpio_priv nrf24l01p_ce_priv = {
@@ -48,7 +47,13 @@ static const struct gpio_priv nrf24l01p_ce_priv = {
     },
     .apb2_grp1_periph = LL_APB2_GRP1_PERIPH_GPIOA,
     .gpio = GPIOA,
-    .pin = LL_GPIO_PIN_8
+};
+
+static const struct gpio_priv spi1_cs_priv = {
+    .config = {.Pin = LL_GPIO_PIN_4, .Mode = LL_GPIO_MODE_OUTPUT, .Speed = LL_GPIO_SPEED_FREQ_LOW, .OutputType = LL_GPIO_OUTPUT_PUSHPULL},
+    .apb2_grp1_periph = LL_APB2_GRP1_PERIPH_GPIOA,
+    .gpio = GPIOA,
+    .default_value = GPIO_HIGH
 };
 
 static const struct gpio_priv nrf24l01p_ce2_priv = {
@@ -60,7 +65,6 @@ static const struct gpio_priv nrf24l01p_ce2_priv = {
     },
     .apb2_grp1_periph = LL_APB2_GRP1_PERIPH_GPIOB,
     .gpio = GPIOB,
-    .pin = LL_GPIO_PIN_0
 };
 
 static int32_t stm32f103xb_gpio_init(const struct gpio_device * const gpio);
@@ -85,6 +89,11 @@ EXPORTED const struct gpio_device nrf24l01p_ce = {
     .priv = &nrf24l01p_ce_priv
 };
 
+EXPORTED const struct gpio_device spi1_cs = {
+    .ops = &gpio_ops,
+    .priv = &spi1_cs_priv
+};
+
 EXPORTED const struct gpio_device nrf24l01p_ce2 = {
     .ops = &gpio_ops,
     .priv = &nrf24l01p_ce2_priv
@@ -96,24 +105,27 @@ static int32_t stm32f103xb_gpio_init(const struct gpio_device * const gpio)
     LL_APB2_GRP1_EnableClock(priv->apb2_grp1_periph);
     LL_GPIO_Init(priv->gpio, (LL_GPIO_InitTypeDef *)&priv->config);
 
+    if (priv->default_value == GPIO_HIGH) LL_GPIO_SetOutputPin(priv->gpio, priv->config.Pin);
+    else                                  LL_GPIO_ResetOutputPin(priv->gpio, priv->config.Pin);
+
     return E_SUCCESS;
 }
 
 static void stm32f103xb_gpio_write(const struct gpio_device * const gpio, int32_t value)
 {
     const struct gpio_priv *priv = (const struct gpio_priv *)gpio->priv;
-    if (value)  LL_GPIO_SetOutputPin(priv->gpio, priv->pin);
-    else        LL_GPIO_ResetOutputPin(priv->gpio, priv->pin);
+    if (value)  LL_GPIO_SetOutputPin(priv->gpio, priv->config.Pin);
+    else        LL_GPIO_ResetOutputPin(priv->gpio, priv->config.Pin);
 }
 
 static int32_t stm32f103xb_gpio_read(const struct gpio_device * const gpio)
 {
     const struct gpio_priv *priv = (const struct gpio_priv *)gpio->priv;
-    return LL_GPIO_IsInputPinSet(priv->gpio, priv->pin);
+    return LL_GPIO_IsInputPinSet(priv->gpio, priv->config.Pin);
 }
 
 static void stm32f103xb_gpio_toggle(const struct gpio_device * const gpio)
 {
     const struct gpio_priv *priv = (const struct gpio_priv *)gpio->priv;
-    LL_GPIO_TogglePin(priv->gpio, priv->pin);
+    LL_GPIO_TogglePin(priv->gpio, priv->config.Pin);
 }
