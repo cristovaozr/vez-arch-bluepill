@@ -11,7 +11,6 @@
 #include <stdint.h>
 
 #include "include/errors.h"
-#include "include/utils.h"
 #include "include/device/pool_op.h"
 
 #include "stm32f103xb.h"
@@ -181,17 +180,17 @@ static const struct usart_operations usart_2_3_ops = {
  */
 static struct usart_priv_rtos priv_rtos[AVAILABLE_USARTS];
 
-EXPORTED const struct usart_device usart1 = {
+const struct usart_device usart1 = {
     .ops = &usart1_ops,
     .priv = &usart1_priv,
 };
 
-EXPORTED const struct usart_device usart2 = {
+const struct usart_device usart2 = {
     .ops = &usart_2_3_ops,
     .priv = &usart2_priv,
 };
 
-EXPORTED const struct usart_device usart3 = {
+const struct usart_device usart3 = {
     .ops = &usart_2_3_ops,
     .priv = &usart3_priv,
 };

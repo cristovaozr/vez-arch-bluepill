@@ -1,7 +1,6 @@
 #include "include/device/pwm.h"
 
 #include "include/errors.h"
-#include "include/utils.h"
 
 #include "stm32f103xb.h"
 #include "stm32f1xx_ll_gpio.h"
@@ -68,7 +67,7 @@ static const struct pwm_operations pwm_tim1_ops = {
     .pwm_set_frequency = pwm_tim1_set_frequency,
 };
 
-EXPORTED const struct pwm_device pwm_tim1 = {
+const struct pwm_device pwm_tim1 = {
     .ops = &pwm_tim1_ops,
     .priv = &tim1_priv,
 };

@@ -12,7 +12,6 @@
 
 #include <stdint.h>
 
-#include "include/utils.h"
 #include "stm32f103xb.h"
 #include "stm32f1xx_ll_gpio.h"
 #include "stm32f1xx_ll_bus.h"
@@ -79,22 +78,22 @@ static const struct gpio_operations gpio_ops = {
     .gpio_toggle_op = stm32f103xb_gpio_toggle
 };
 
-EXPORTED const struct gpio_device led_gpio = {
+const struct gpio_device led_gpio = {
     .ops = &gpio_ops,
     .priv = &led_priv,
 };
 
-EXPORTED const struct gpio_device nrf24l01p_ce = {
+const struct gpio_device nrf24l01p_ce = {
     .ops = &gpio_ops,
     .priv = &nrf24l01p_ce_priv
 };
 
-EXPORTED const struct gpio_device spi1_cs = {
+const struct gpio_device spi1_cs = {
     .ops = &gpio_ops,
     .priv = &spi1_cs_priv
 };
 
-EXPORTED const struct gpio_device nrf24l01p_ce2 = {
+const struct gpio_device nrf24l01p_ce2 = {
     .ops = &gpio_ops,
     .priv = &nrf24l01p_ce2_priv
 };

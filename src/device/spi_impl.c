@@ -12,7 +12,6 @@
 #include <stddef.h>
 
 #include "include/errors.h"
-#include "include/utils.h"
 #include "include/device/pool_op.h"
 #include "ulibc/include/utils.h"
 
@@ -47,7 +46,7 @@ static const struct spi_operations spi1_ops = {
     .spi_transact_op = stm32f103xb_spi_transact
 };
 
-EXPORTED const struct spi_device spi1 = {
+const struct spi_device spi1 = {
     .ops = &spi1_ops,
     .priv = &spi1_priv
 };
@@ -59,7 +58,7 @@ static const struct spi_operations spi2_ops = {
     .spi_transact_op = stm32f103xb_spi_transact
 };
 
-EXPORTED const struct spi_device spi2 = {
+const struct spi_device spi2 = {
     .ops = &spi2_ops,
     .priv = &spi2_priv
 };
