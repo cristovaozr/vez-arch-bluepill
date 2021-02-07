@@ -34,8 +34,8 @@ static const struct spi_priv spi2_priv = {
 
 static int32_t stm32f103xb_spi1_init(const struct spi_device * const spi);
 static int32_t stm32f103xb_spi2_init(const struct spi_device * const spi);
-static int32_t stm32f103xb_spi_write(const struct spi_device * const spi, uint32_t size, const void *data, uint32_t timeout);
-static int32_t stm32f103xb_spi_read(const struct spi_device * const spi, uint32_t size, void *data, uint32_t timeout);
+static int32_t stm32f103xb_spi_write(const struct spi_device * const spi, const void *data, uint32_t size, uint32_t timeout);
+static int32_t stm32f103xb_spi_read(const struct spi_device * const spi, void *data, uint32_t size, uint32_t timeout);
 static int32_t stm32f103xb_spi_transact(const struct spi_device * const spi, struct spi_transaction * const transaction,
     uint32_t timeout);
 
@@ -145,7 +145,7 @@ static int32_t stm32f103xb_spi2_init(const struct spi_device * const spi)
     return E_SUCCESS;
 }
 
-static int32_t stm32f103xb_spi_write(const struct spi_device * const spi, uint32_t size, const void *data, uint32_t timeout)
+static int32_t stm32f103xb_spi_write(const struct spi_device * const spi, const void *data, uint32_t size, uint32_t timeout)
 {
     (void)timeout;
     int32_t i;
@@ -167,7 +167,7 @@ static int32_t stm32f103xb_spi_write(const struct spi_device * const spi, uint32
     return i;
 }
 
-static int32_t stm32f103xb_spi_read(const struct spi_device * spi, uint32_t size, void *data, uint32_t timeout)
+static int32_t stm32f103xb_spi_read(const struct spi_device * spi, void *data, uint32_t size, uint32_t timeout)
 {
     (void)timeout;
     int32_t i;
