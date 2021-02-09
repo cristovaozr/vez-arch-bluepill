@@ -3,6 +3,7 @@
 #include "include/device/gpio.h"
 #include "include/device/usart.h"
 #include "include/device/i2c.h"
+#include "include/device/cpu.h"
 
 #include "ulibc/include/utils.h"
 
@@ -18,13 +19,15 @@ extern const struct usart_device usart3;
 extern const struct spi_device spi1;
 extern const struct spi_device spi2;
 extern const struct i2c_device i2c1;
+extern const struct cpu stm32f103xb_cpu;
 
 struct device_tree {
     const char *name;
     const void *device;
 };
 
-static struct device_tree tree[6] = {
+static const struct device_tree tree[7] = {
+    {DEFAULT_CPU,   &stm32f103xb_cpu},
     {DEFAULT_USART, &usart2},
     {DEFAULT_LED,   &led_gpio},
     {"spi1",        &spi1},
