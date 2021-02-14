@@ -108,7 +108,7 @@ static int32_t stm32f103xb_i2c_write(const struct i2c_device * const i2c, const 
 
 static int32_t stm32f103xb_i2c_read(const struct i2c_device * const i2c, const struct i2c_transaction *transaction, uint32_t timeout)
 {
-    int32_t ret;
+    int32_t ret = E_SUCCESS;
     uint32_t t;
 
     if (transaction == NULL || i2c == NULL) {
