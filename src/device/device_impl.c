@@ -34,13 +34,14 @@ struct device_tree {
     const void *device;
 };
 
-static const struct device_tree tree[7] = {
+static const struct device_tree tree[8] = {
     {DEFAULT_CPU,   &stm32f103xb_cpu},
     {DEFAULT_USART, &usart2},
     {DEFAULT_LED,   &led_gpio},
     {"spi1",        &spi1},
     {"i2c1",        &i2c1},
     {"spi1_cs",     &spi1_cs},
+    {"usart1",      &usart1},
     {"nrf24l01p_ce", &nrf24l01p_ce}
 };
 
