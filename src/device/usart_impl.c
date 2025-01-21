@@ -259,12 +259,16 @@ static int32_t stm32f103xb_usart_write(const struct usart_device * const usart, 
     const struct usart_priv *priv = (const struct usart_priv *)usart->priv;
     const uint8_t *udata = (const uint8_t *)data;
     uint32_t i;
+    int32_t ret;
 
     if (priv_rtos[priv->index].tx_queue == NULL || priv_rtos[priv->index].mutex == NULL) {
         return E_NOT_INITIALIZED;
     }
 
-    xSemaphoreTake(priv_rtos[priv->index].mutex, portMAX_DELAY);
+    if (xSemaphoreTake(priv_rtos[priv->index].mutex, timeout) == pdFAIL) {
+        ret = E_TIMEOUT;
+        goto exit;
+    }
     for(i = 0; i < size; i++) {
         if (xQueueSend(priv_rtos[priv->index].tx_queue, &udata[i], timeout) == pdFAIL) {
             break; // Timed-out. Must stop and return now. A timeout is not an error!
@@ -272,8 +276,11 @@ static int32_t stm32f103xb_usart_write(const struct usart_device * const usart, 
             LL_USART_EnableIT_TXE(priv->usart);
         }
     }
+    ret = i;
+
+    exit:
     xSemaphoreGive(priv_rtos[priv->index].mutex);
-    return (int32_t)i;
+    return ret;
 }
 
 static int32_t stm32f103xb_usart_read(const struct usart_device * const usart, void *data, uint32_t size,
@@ -289,7 +296,10 @@ static int32_t stm32f103xb_usart_read(const struct usart_device * const usart, v
         goto exit;
     }
 
-    xSemaphoreTake(priv_rtos[priv->index].mutex, portMAX_DELAY);
+    if (xSemaphoreTake(priv_rtos[priv->index].mutex, timeout) == pdFAIL) {
+        ret = E_TIMEOUT;
+        goto exit;
+    }
     for(i = 0; i < size; i++) {
         if (xQueueReceive(priv_rtos[priv->index].rx_queue, &udata[i], timeout) == pdFAIL) {
             ret = E_TIMEOUT;
